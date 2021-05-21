@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\d \@ -> \u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\d \@ -> \u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]$(git_branch)\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -94,7 +94,7 @@ alias l='ls -CF'
 alias docs='cd /mnt/c/Users/Paul/Documents'
 alias gc='git commit'
 alias gs='git status'
-alias reload='source ~/.bashrc && clear'
+alias b='git branch'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -122,3 +122,7 @@ fi
 
 LS_COLORS='ow=01;31'
 export LS_COLORS
+
+git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
